@@ -2,12 +2,14 @@
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ import java.util.ArrayList;
                 Toast.makeText(FriendsActivity.this, "Tapped on user "+ users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
             }
         };
+
+        getUsers();
     }
 
      @Override
@@ -63,6 +67,12 @@ import java.util.ArrayList;
                  {
                      users.add(snapshot1.getValue(User.class));
                  }
+                 usersAdapter= new UsersAdapter(users, FriendsActivity.this, onUserClickListener);
+                 recyclerView.setLayoutManager(new LinearLayoutManager(FriendsActivity.this));
+                 recyclerView.setAdapter(usersAdapter);
+                 progressBar.setVisibility(View.GONE);
+                 recyclerView.setVisibility(View.VISIBLE);
+
              }
 
              @Override
