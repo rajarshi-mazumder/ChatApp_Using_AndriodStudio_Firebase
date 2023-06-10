@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
      private ProgressBar progressBar;
      private UsersAdapter usersAdapter;
      UsersAdapter.OnUserClickListener onUserClickListener;
+
+     private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +39,20 @@ import java.util.ArrayList;
         users= new ArrayList<>();
         recyclerView= findViewById(R.id.recycler);
 
+        swipeRefreshLayout= findViewById(R.id.swipeLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getUsers();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         onUserClickListener= new UsersAdapter.OnUserClickListener() {
             @Override
             public void onUserClicked(int position) {
+                startActivity(new Intent(FriendsActivity.this, MessageActivity.class));
                 Toast.makeText(FriendsActivity.this, "Tapped on user "+ users.get(position).getUsername(), Toast.LENGTH_SHORT).show();
             }
         };
@@ -60,6 +74,7 @@ import java.util.ArrayList;
      }
 
      private void getUsers(){
+        users.clear();
          FirebaseDatabase.getInstance().getReference("user").addListenerForSingleValueEvent(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.ChatApp" parent="Base.Theme.ChatApp" />
+    
+    <style name="StyleWithoutToolbar" parent="Theme.Material3.DayNight.NoActionBar">
+
+    </style>
 </resources>
