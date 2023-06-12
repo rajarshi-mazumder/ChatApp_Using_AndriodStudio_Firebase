@@ -3,15 +3,15 @@ package com.app1.chatapp;
 public class Message {
     private String sender;
     private String receiver;
-    private String contact;
+    private String content;
 
     public Message() {
     }
 
-    public Message(String sender, String receiver, String contact) {
+    public Message(String sender, String receiver, String content) {
         this.sender = sender;
         this.receiver = receiver;
-        this.contact = contact;
+        this.content = content;
     }
 
     public String getSender() {
@@ -30,11 +30,11 @@ public class Message {
         this.receiver = receiver;
     }
 
-    public String getContact() {
-        return contact;
+    public String getContent() {
+        return content;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setContent(String content) {
+        this.content = content;
     }
 }
